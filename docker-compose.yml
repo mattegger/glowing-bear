@@ -1,0 +1,27 @@
+services:
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      -  WATCHTOWER_POLL_INTERVAL=60 # Poll every 60 seconds
+      -  WATCHTOWER_LABEL_ENABLE=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: watchtower
+
+  glowing-bear:
+    image: thewegger/glowing-bear:latest
+    container_name: glowing-bear
+    networks:
+      - proxy
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.glowing-bear.rule=Host(`glowing-bear.mattegger.com`)"
+      - "traefik.http.routers.glowing-bear.entrypoints=websecure"
+      - "traefik.http.routers.glowing-bear.tls.certresolver=myresolver"
+
+networks:
+  proxy:
+    external: true
+    name: proxy
