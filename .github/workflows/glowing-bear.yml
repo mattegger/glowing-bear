@@ -3,7 +3,7 @@ name: glowing-bear app
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
