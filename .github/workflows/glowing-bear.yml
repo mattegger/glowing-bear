@@ -1,7 +1,7 @@
 name: glowing-bear app
 
 on:
-  push:
+  [push, workflow_dispatch]:
     branches:
       - master
 jobs:
